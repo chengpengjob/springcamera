@@ -38,7 +38,7 @@ public class CameraController {
      */
     @GetMapping("/camera/{cameraId}/play")
     public Integer playVideo(@PathVariable Integer cameraId, HttpServletRequest request) {
-        //cameraUtil.getCameraList();
+        cameraUtil.getCameraList();
 
         //获取对应的CameraIndexCode
         Camera camera = cameraService.findbycamera(cameraId);
@@ -51,7 +51,8 @@ public class CameraController {
         String fileDir = strDirPath.substring(0, strDirPath.indexOf("springcamera"));
         File videoAddress = new File(fileDir + "/HLS-demo/m3u8/Gear" + cameraId);*/
 
-        String fileDir = "E:/tomcat/apache-tomcat-8.5.43/webapps";
+        //String fileDir = "E:/tomcat/apache-tomcat-8.5.43/webapps";
+        String fileDir = "/cp/apache-tomcat-9.0.27/webapps";
         File videoAddress = new File(fileDir + "/HLS-demo/m3u8/Gear" + cameraId);
 
         if (!videoAddress.exists()) {

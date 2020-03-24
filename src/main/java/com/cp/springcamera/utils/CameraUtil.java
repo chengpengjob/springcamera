@@ -9,6 +9,7 @@ import com.hikvision.artemis.sdk.config.ArtemisConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,10 +27,19 @@ public class CameraUtil {
         ArtemisConfig.appSecret = "1WWlprPgNzzFpK0lsMKF";
     }
 
+    private static final String ARTEMIS_PATH = "/artemis";
+
     @Autowired
     private CameraService cameraService;
 
-    private static final String ARTEMIS_PATH = "/artemis";
+    private static CameraUtil cameraUtil;
+
+    @PostConstruct
+    public void init(){
+        cameraUtil = this;
+        cameraUtil.cameraService = this.cameraService;
+    }
+
 
     /**
      * 定时任务，每次全量更新
@@ -69,8 +79,9 @@ public class CameraUtil {
         Camera camera = new Camera();
         JSONObject two = null;
         //遍历返回的数据存到数据库中
-        for (int i = 1; i <= (jsonArray.size()) + 1; i++) {
-            camera.setCameraid(i);
+        for (int i = 0; i <= jsonArray.size(); i++) {
+            int cp = i+1;
+            camera.setCameraid(cp);
             two = jsonArray.getJSONObject(i);
             camera.setCameraindexcode(two.get("cameraIndexCode").toString());
             camera.setCameraname(two.get("cameraName").toString());
@@ -78,7 +89,7 @@ public class CameraUtil {
             camera.setRecordlocationname("null");
             camera.setStatusname("null");
             camera.setStatus("1");
-            cameraService.add(camera);
+            cameraUtil.cameraService.add(camera);
         }
     }
 

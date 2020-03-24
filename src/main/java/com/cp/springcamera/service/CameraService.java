@@ -15,8 +15,8 @@ public class CameraService {
     @Autowired
     CameraMapper cameraMapper;
 
-    public Camera add(Camera camera){
-        return cameraMapper.insert(camera);
+    public void add(Camera camera){
+        cameraMapper.insert(camera);
     }
 
     public Camera findbycamera(Integer cameraId){
