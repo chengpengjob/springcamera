@@ -79,17 +79,42 @@ public class CameraUtil {
         Camera camera = new Camera();
         JSONObject two = null;
         //遍历返回的数据存到数据库中
-        for (int i = 0; i <= jsonArray.size(); i++) {
-            int cp = i+1;
-            camera.setCameraid(cp);
+        for (int i = 0; i < jsonArray.size(); i++) {
             two = jsonArray.getJSONObject(i);
-            camera.setCameraindexcode(two.get("cameraIndexCode").toString());
-            camera.setCameraname(two.get("cameraName").toString());
-            camera.setRecordlocation("null");
-            camera.setRecordlocationname("null");
-            camera.setStatusname("null");
-            camera.setStatus("1");
-            cameraUtil.cameraService.add(camera);
+            int cp = i+ 1;
+            //防止重复数据插入数据库中
+            //|| !(two.get("cameraName").toString()).equals(((cameraUtil.cameraService).findbycamera(i)).getCameraname())
+            if(((cameraUtil.cameraService).findbycamera(cp)) == null){
+                camera.setCameraid(cp);
+                camera.setCameraindexcode(two.get("cameraIndexCode").toString());
+                camera.setCameraname(two.get("cameraName").toString());
+
+                camera.setRecordlocation("null");
+                camera.setRecordlocationname("null");
+                camera.setStatusname("null");
+                camera.setStatus("1");
+                cameraUtil.cameraService.add(camera);
+
+                /*if((two.get("recordLocation").toString()) != null){
+                    camera.setRecordlocation(two.get("recordLocation").toString());
+                }else{
+                    camera.setRecordlocation("null");
+                }if((two.get("recordLocationName").toString()) != null){
+                    camera.setRecordlocationname(two.get("recordLocationName").toString());
+                }else{
+                    camera.setRecordlocationname("null");
+                }if((two.get("status").toString()) != null){
+                    camera.setStatus(two.get("status").toString());
+                }else{
+                    camera.setStatus("1");
+                }if((two.get("statusName").toString()) != null){
+                    camera.setStatusname(two.get("statusName").toString());
+                }else{
+                    camera.setStatusname("null");
+                }*/
+            }else {
+               return;
+            }
         }
     }
 
@@ -162,7 +187,7 @@ public class CameraUtil {
         return rtsp;
     }
 
-   /* public static void main(String[] args) {
+    /*public static void main(String[] args) {
         String list = getCameraList();
 
     }*/
