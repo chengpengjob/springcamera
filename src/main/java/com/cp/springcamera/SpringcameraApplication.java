@@ -8,8 +8,9 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
+//@ServletComponentScan
 @MapperScan(basePackages = "com.cp.springcamera.mapper")
-public class SpringcameraApplication{
+public class SpringcameraApplication {
 
     /*@Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder){

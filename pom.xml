@@ -55,6 +55,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- 打成war包放到服务器上所需的配置条件-->
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>-->
     </dependencies>
 
     <build>
