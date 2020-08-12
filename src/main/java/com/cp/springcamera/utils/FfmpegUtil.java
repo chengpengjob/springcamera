@@ -11,6 +11,12 @@ import java.util.Map;
  * @create 2020-03-26 16:28
  */
 public class FfmpegUtil {
+    /**
+     * 获取视频
+     * @param cameraId
+     * @param address
+     * @return
+     */
     public Integer slice(Integer cameraId, String address ){
         GetSyncPipe getSyncPipe = new GetSyncPipe();
         Map<Integer, Object> map = new HashMap<>();
@@ -74,6 +80,36 @@ public class FfmpegUtil {
                 MidleCount.add(countKey, integer);
             }
         }
+        return 1;
+    }
+
+    /**
+     * 获取图片
+     */
+    public Integer sliceimages(Integer cameraId, String address){
+        String fileDir = "E:/ffmpegimages";
+        File videoAddress = new File(fileDir + "/Images/Gear" + cameraId);
+
+        if (!videoAddress.exists()) {
+            videoAddress.mkdir();
+        }
+        List<String> list = new ArrayList<>();
+        list.add("ffmpeg");
+        list.add("-i");
+        list.add(address);
+        list.add("-y");
+        list.add("-f");
+        list.add("image2");
+        list.add("-r");
+        list.add("1/1");
+        list.add("-updatefirst");
+        list.add("1");
+        list.add("-s");
+        list.add("640x480");
+        list.add("img.jpg");
+
+        SyncPipe syncPipe = new SyncPipe(list, videoAddress);
+        syncPipe.start();
         return 1;
     }
 }

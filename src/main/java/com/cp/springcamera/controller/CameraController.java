@@ -46,6 +46,8 @@ public class CameraController {
 
         //利用ffmpeg的方式把rtsp流转换成可播放的数据源
         return ffmpegUtil.slice(cameraId, address);
+       /*String address = "rtsp://172.16.10.204/media/video1";
+       return ffmpegUtil.slice(cameraId,address );*/
 
     }
 
@@ -108,4 +110,15 @@ public class CameraController {
             thread.start();
         }
     }
+
+    /**
+     * 获取一帧的图片每秒刷新一次
+     */
+
+    @GetMapping("/camera/{cameraId}/images")
+    public Integer returnimages(@PathVariable Integer cameraId){
+        String address = "rtsp://admin:12345@172.16.10.201/h264";
+        return ffmpegUtil.sliceimages(cameraId,address);
+    }
+
 }
